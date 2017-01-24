@@ -7,7 +7,8 @@ const program = require('commander'),
   fs = require('fs'),
   child_process = require('child_process'),
   mkdirp = require('mkdirp'),
-  tar = require('tar-stream');
+  tar = require('tar-stream'),
+  walk = require('walk');
 
 require('pkginfo')(module, 'version');
 
@@ -33,5 +34,15 @@ expand(program.config ? "${include('" + path.basename(program.config) + "')}"
 
    const pack = tar.pack();
    pack.entry({ name: 'manifest' }, JSON.stringify(manifest));
+
+   const walker = walk.walk('./', {});
+
+   walker.on('file', (root, fileStats, next) => {
+     const entry = pack.entry({ name: fileStats.name });
+     const rs = fs.createReadStream(fileStats.name);
+     rs.on('end',() => { entry.end(); next();});
+     rs.pipe(entry);
+   });
+
    pack.pipe(process.stdout);
  });
