@@ -1,0 +1,72 @@
+{
+  "name": "baci",
+  "version": "0.0.0-semantic-release",
+  "description": "build aci images",
+  "module": "src/baci.sh",
+  "main": "dist/baci.sh",
+  "keywords": [
+    "container",
+    "aci"
+  ],
+  "bin": {
+    "baci": "bin/baci"
+  },
+  "scripts": {
+    "precover": "npm run prepublish",
+    "cover": "nyc npm test",
+    "pretest": "npm run prepublish",
+    "test": "mocha tests/*_test.js",
+    "posttest": "markdown-doctest",
+    "prepublish": "rollup --output=bin/baci -c -- src/baci.js && chmod +x bin/baci",
+    "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arlac77/baci.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arlac77/baci/issues"
+  },
+  "homepage": "https://github.com/arlac77/baci#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "config-expander": "^6.2.5"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^1.2.0",
+    "jsdoc-to-markdown": "^2.0.1",
+    "markdown-doctest": "^0.9.1",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
+    "rollup": "^0.41.4",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "semantic-release": "^6.3.6"
+  },
+  "contributors": [
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
+  "license": "BSD-2-Clause",
+  "engines": {
+    "node": ">=6.9.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "include": [
+      "dist/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
+    "report-dir": "./coverage"
+  }
+}
