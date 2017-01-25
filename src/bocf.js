@@ -20,7 +20,7 @@ from 'config-expander';
 
 program
   .version(module.exports.version)
-  .description('build aci image')
+  .description('build ocf image')
   .option('-c, --config <file>', 'use config from file')
   .parse(process.argv);
 

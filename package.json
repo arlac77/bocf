@@ -1,15 +1,15 @@
 {
-  "name": "baci",
+  "name": "bocf",
   "version": "0.0.0-semantic-release",
-  "description": "build aci images",
-  "module": "src/baci.sh",
-  "main": "dist/baci.sh",
+  "description": "build ocf images",
+  "module": "src/bocf.sh",
+  "main": "dist/bocf.sh",
   "keywords": [
     "container",
-    "aci"
+    "ocf"
   ],
   "bin": {
-    "baci": "bin/baci"
+    "bocf": "bin/bocf"
   },
   "scripts": {
     "precover": "npm run prepublish",
@@ -17,18 +17,18 @@
     "pretest": "npm run prepublish",
     "test": "mocha tests/*_test.js",
     "posttest": "markdown-doctest",
-    "prepublish": "rollup --output=bin/baci -c -- src/baci.js && chmod +x bin/baci",
+    "prepublish": "rollup --output=bin/bocf -c -- src/bocf.js && chmod +x bin/bocf",
     "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arlac77/baci.git"
+    "url": "git+https://github.com/arlac77/bocf.git"
   },
   "bugs": {
-    "url": "https://github.com/arlac77/baci/issues"
+    "url": "https://github.com/arlac77/bocf/issues"
   },
-  "homepage": "https://github.com/arlac77/baci#readme",
+  "homepage": "https://github.com/arlac77/bocf#readme",
   "dependencies": {
     "commander": "^2.9.0",
     "config-expander": "^6.2.5",

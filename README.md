@@ -1,7 +1,7 @@
 
-
+bocf
 =====
-
+build ocf images
 
 
 [App Container Image](https://github.com/appc/spec/blob/master/spec/aci.md)
@@ -17,7 +17,7 @@ install
 With [npm](http://npmjs.org) do:
 
 ```shell
-npm install 
+npm install bocf
 ```
 
 license
