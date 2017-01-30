@@ -42,39 +42,77 @@ expand(program.config ? "${include('" + path.basename(program.config) + "')}"
 
    pack.entry({ name: 'manifest' }, JSON.stringify(manifest));
 
-   for(const name of ['.gitignore','LICENSE','.npmignore']) {
-   fs.stat(name,(err,stat) => {
-     if(err) { console.log(err); return ; }
-     console.log(stat);
-     const entry = pack.entry({ name: name, size: stat.size }, (err) => {
-       console.log('end');
-       pack.finalize();
+   add(pack,'.');
+ });
+
+ function statAll(cwd = '.', entries = ['.']) {
+   const queue = entries;
+
+   return callback => {
+     if (!queue.length) return callback();
+     let next = queue.shift();
+     let nextAbs = path.join(cwd, next);
+
+     fs.stat(nextAbs, (err, stat) => {
+       if (err) return callback(err);
+
+       if (!stat.isDirectory()) return callback(null, next, stat);
+
+       fs.readdir(nextAbs, (err, files) => {
+         if (err) return callback(err);
+
+         for (let i = 0; i < files.length; i++) {
+           queue.push(path.join(next, files[i]));
+         }
+
+         callback(null, next, stat);
+       });
      });
-     fs.createReadStream(name).pipe(entry);
-   });
-}
+   };
+ }
+
+ function add(pack,cwd = '.') {
+   const statNext = statAll();
+
+   const onStat = (err, filename, stat) => {
+     if (err) return pack.destroy(err);
+     if (!filename) return pack.finalize();
+
+     console.log(`onStat: ${filename}`);
+     const header = {
+       name: filename,
+       mtime: stat.mtime,
+       size: stat.size,
+       type: 'file',
+       uid: stat.uid,
+       gid: stat.gid
+     };
+
+     if (stat.isDirectory()) {
+       header.size = 0;
+       header.type = 'directory';
+       return pack.entry(header, onNextEntry);
+     }
+
+     const entry = pack.entry(header, onNextEntry);
+     if (!entry) return;
 
 /*
-   const walker = walk.walk('./', {});
+     const rs = fs.createReadStream(path.join(cwd, filename));
 
+     rs.on('error', err => entry.destroy(err));
+     rs.on('end', () => console.log(`end ${filename}`));
 
-   walker.on('file', (root, fileStats, next) => {
+     pump(rs, entry);
+     */
+   };
 
-     console.log(`got: ${fileStats.name}`);
+   const onNextEntry = err => {
+     //console.log(`onnextentry: ${err}`);
 
-     const entry = pack.entry({ name: fileStats.name, size: fileStats.size },fs.readFileSync(fileStats.name));
+     if (err) return pack.destroy(err);
+     statNext(onStat);
+   };
 
-     next();
-     //const rs = fs.createReadStream(fileStats.name);
-
-     //pump(rs,entry);
-     //setTimeout(() => next(),1000);
-   });
-
-   walker.on('end', () => {
-     console.log("all done");
-     pack.finalize();
-   });
-*/
-
- });
+   onNextEntry();
+}
