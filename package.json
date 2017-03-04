@@ -30,10 +30,9 @@
   },
   "homepage": "https://github.com/arlac77/bocf#readme",
   "dependencies": {
-    "commander": "^2.9.0",
+    "caporal": "^0.3.0",
     "config-expander": "^7.0.0",
     "mkdirp": "^0.5.1",
-    "pkginfo": "^0.4.0",
     "pump": "^1.0.2",
     "tar-fs": "^1.15.1",
     "walk": "^2.3.9"

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const program = require('commander'),
+const program = require('caporal'),
   path = require('path'),
   fs = require('fs'),
   child_process = require('child_process'),
@@ -12,8 +12,6 @@ const program = require('commander'),
   pump = require('pump'),
   walk = require('walk');
 
-require('pkginfo')(module, 'version');
-
 import {
   expand
 }
@@ -21,29 +19,31 @@ from 'config-expander';
 
 
 program
-  .version(module.exports.version)
+  .version(require(path.join(__dirname,'..','package.json')).version)
   .description('build ocf image')
-  .option('-c, --config <file>', 'use config from file')
-  .parse(process.argv);
+  .action( (args, options, logger) => {
+    const out = fs.createWriteStream('/tmp/a.tar');
 
-const out = fs.createWriteStream('/tmp/a.tar');
+    expand(options.config ? "${include('" + path.basename(options.config) + "')}"
+     : {}).then(config => {
 
-expand(program.config ? "${include('" + path.basename(program.config) + "')}"
- : {}).then(config => {
+       const manifest = {
+         acKind: 'ImageManifest',
+         acVersion: '0.8.9'
+       };
 
-   const manifest = {
-     acKind: 'ImageManifest',
-     acVersion: '0.8.9'
-   };
+       const pack = tar.pack();
 
-   const pack = tar.pack();
+       pump(pack,out);
 
-   pump(pack,out);
+       pack.entry({ name: 'manifest' }, JSON.stringify(manifest));
 
-   pack.entry({ name: 'manifest' }, JSON.stringify(manifest));
+       add(pack,'.');
+     });
+  })
+  .option('-c, --config <file>', 'use config from file');
 
-   add(pack,'.');
- });
+program.parse(process.argv);
 
  function statAll(cwd = '.', entries = ['.']) {
    const queue = entries;
