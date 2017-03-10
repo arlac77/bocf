@@ -2,8 +2,8 @@
   "name": "bocf",
   "version": "0.0.0-semantic-release",
   "description": "build ocf images",
-  "module": "src/bocf.sh",
-  "main": "dist/bocf.sh",
+  "module": "src/bocf.js",
+  "main": "dist/bocf.js",
   "keywords": [
     "container",
     "ocf"
@@ -49,12 +49,10 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "semantic-release": "^6.3.6"
   },
-  "contributors": [
-    {
-      "name": "Markus Felten",
-      "email": "markus.felten@gmx.de"
-    }
-  ],
+  "contributors": [{
+    "name": "Markus Felten",
+    "email": "markus.felten@gmx.de"
+  }],
   "license": "BSD-2-Clause",
   "engines": {
     "node": ">=6.9.4"
