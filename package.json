@@ -13,11 +13,11 @@
   },
   "scripts": {
     "precover": "npm run prepublish",
-    "cover": "nyc npm test",
-    "pretest": "npm run prepublish",
-    "test": "mocha tests/*_test.js",
+    "cover": "nyc ava",
+    "pretest": "rollup -c rollup.config.test.js",
+    "test": "ava",
     "posttest": "markdown-doctest",
-    "prepublish": "rollup --output=bin/bocf -c -- src/bocf.js && chmod +x bin/bocf",
+    "prepublish": "rollup --output=bin/bocf -c -- src/bocf.sh && chmod +x bin/bocf",
     "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -38,16 +38,18 @@
     "walk": "^2.3.9"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
     "cz-conventional-changelog": "^2.0.0",
     "jsdoc-to-markdown": "^3.0.0",
     "markdown-doctest": "^0.9.1",
-    "mocha": "^3.2.0",
     "nyc": "^10.1.2",
     "rollup": "^0.41.5",
     "rollup-plugin-commonjs": "^7.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "semantic-release": "^6.3.6"
+    "semantic-release": "^6.3.6",
+    "ava": "^0.18.2",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-multi-entry": "^2.0.1"
   },
   "contributors": [
     {
@@ -57,7 +59,7 @@
   ],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=6.9.4"
+    "node": ">=7.7.2"
   },
   "config": {
     "commitizen": {
@@ -72,5 +74,13 @@
       "lcov"
     ],
     "report-dir": "./coverage"
+  },
+  "ava": {
+    "files": [
+      "build/test-bundle.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   }
 }
