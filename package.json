@@ -12,7 +12,7 @@
     "bocf": "bin/bocf"
   },
   "scripts": {
-    "precover": "npm run prepublish",
+    "precover": "rollup -c rollup.config.test.js",
     "cover": "nyc ava",
     "pretest": "rollup -c rollup.config.test.js",
     "test": "ava",
@@ -59,7 +59,7 @@
   ],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=7.7.2"
+    "node": ">=7.8.0"
   },
   "config": {
     "commitizen": {
