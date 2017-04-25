@@ -1,5 +1,5 @@
 [![npm](https://img.shields.io/npm/v/bocf.svg)](https://www.npmjs.com/package/bocf)
-[![Greenkeeper](https://badges.greenkeeper.io/arlac77/bocf)](https://greenkeeper.io/)
+[![Greenkeeper](https://badges.greenkeeper.io/arlac77/bocf.svg)](https://greenkeeper.io/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/arlac77/bocf)
 [![Build Status](https://secure.travis-ci.org/arlac77/bocf.png)](http://travis-ci.org/arlac77/bocf)
 [![bithound](https://www.bithound.io/github/arlac77/bocf/badges/score.svg)](https://www.bithound.io/github/arlac77/bocf)
