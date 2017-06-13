@@ -12,9 +12,9 @@
     "bocf": "bin/bocf"
   },
   "scripts": {
-    "precover": "rollup -c rollup.config.test.js",
+    "precover": "rollup -c tests/rollup.config.js",
     "cover": "nyc ava",
-    "pretest": "rollup -c rollup.config.test.js",
+    "pretest": "rollup -c tests/rollup.config.js",
     "test": "ava",
     "posttest": "npm run prepublish && markdown-doctest",
     "prepublish": "rollup --output=bin/bocf -c -- src/bocf.js && chmod +x bin/bocf",
@@ -38,7 +38,6 @@
     "walk": "^2.3.9"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^2.0.0",
     "jsdoc-to-markdown": "^3.0.0",
     "markdown-doctest": "^0.9.1",
     "nyc": "^11.0.2",
@@ -62,12 +61,7 @@
   ],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=8.0.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+    "node": ">=8.1.0"
   },
   "nyc": {
     "include": [
