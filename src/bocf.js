@@ -13,11 +13,10 @@ const program = require('caporal'),
   pump = require('pump'),
   walk = require('walk');
 
-
 program
   .version(require(path.join(__dirname, '..', 'package.json')).version)
   .description('build ocf image')
-  .action((args, options, logger) => {
+  .action((args, options) => {
     const out = fs.createWriteStream('/tmp/a.tar');
 
     expand(options.config ? "${include('" + path.basename(options.config) + "')}" : {}).then(config => {
