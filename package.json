@@ -4,7 +4,10 @@
   "description": "build ocf images",
   "module": "src/bocf.js",
   "main": "dist/bocf.js",
-  "keywords": ["container", "ocf"],
+  "keywords": [
+    "container",
+    "ocf"
+  ],
   "bin": {
     "bocf": "bin/bocf"
   },
@@ -30,8 +33,7 @@
     "caporal": "^0.7.0",
     "config-expander": "^7.1.2",
     "pump": "^1.0.2",
-    "tar-fs": "^1.15.3",
-    "walk": "^2.3.9"
+    "tar-stream": "^1.5.4"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^3.0.0",
@@ -59,13 +61,21 @@
     "node": ">=8.2.1"
   },
   "nyc": {
-    "include": ["dist/**/*.js"],
-    "reporter": ["lcov"],
+    "include": [
+      "dist/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
     "report-dir": "./coverage"
   },
   "ava": {
-    "files": ["build/test-bundle.js"],
-    "require": ["babel-register"]
+    "files": [
+      "build/test-bundle.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   },
   "template": {
     "repository": {

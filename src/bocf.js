@@ -5,8 +5,8 @@ const program = require('caporal'),
   fs = require('fs'),
   child_process = require('child_process'),
   tar = require('tar-stream'),
-  tarfs = require('tar-fs'),
-  pump = require('pump');
+  pump = require('pump'),
+  { callbackify } = require('util');
 
 program
   .version(require(path.join(__dirname, '..', 'package.json')).version)
@@ -39,12 +39,35 @@ program
       )
       .end();
 
-    //console.log(`entry: ${JSON.stringify(entry)}`);
-    //add(pack, '.');
+    walk(pack, '.');
   })
   .option('-c, --config <file>', 'use config from file');
 
 program.parse(process.argv);
+
+const readdir = callbackify(fs.readdir);
+const fstat = callbackify(fs.fstat);
+
+async function walk(pack, dir) {
+  console.log(`walk: ${dir}`);
+
+  const entries = await readdir(dir);
+  console.log(`*** 1 ***`);
+
+  const stats = await Promise.all(
+    entries.map(entry => fstat(path.join(dir, entry)))
+  );
+  console.log(`*** 2 ***`);
+
+  for (const i in stats) {
+    const stat = stats[i];
+    if (stat.isDirectory()) {
+      await walk(pack, path.join(dir, entries[i].name));
+    }
+  }
+
+  console.log(`*** 3 ***`);
+}
 
 function statAll(cwd = '.', entries = ['.']) {
   const queue = entries;
