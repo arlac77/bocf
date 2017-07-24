@@ -6,8 +6,7 @@ const program = require('caporal'),
   child_process = require('child_process'),
   tar = require('tar-stream'),
   tarfs = require('tar-fs'),
-  pump = require('pump'),
-  walk = require('walk');
+  pump = require('pump');
 
 program
   .version(require(path.join(__dirname, '..', 'package.json')).version)
@@ -27,16 +26,21 @@ program
 
     const pack = tar.pack();
 
-    pump(pack, out);
+    pump(pack, out, err => {
+      console.log(`pump done ${err}`);
+    });
 
-    pack.entry(
-      {
-        name: 'manifest'
-      },
-      JSON.stringify(manifest)
-    );
+    pack
+      .entry(
+        {
+          name: 'manifest'
+        },
+        JSON.stringify(manifest)
+      )
+      .end();
 
-    add(pack, '.');
+    //console.log(`entry: ${JSON.stringify(entry)}`);
+    //add(pack, '.');
   })
   .option('-c, --config <file>', 'use config from file');
 
