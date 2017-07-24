@@ -1,7 +1,4 @@
-import {
-  expand
-}
-from 'config-expander';
+import { expand } from 'config-expander';
 
 const program = require('caporal'),
   path = require('path'),
@@ -15,26 +12,31 @@ const program = require('caporal'),
 program
   .version(require(path.join(__dirname, '..', 'package.json')).version)
   .description('build ocf image')
-  .action((args, options) => {
+  .action(async (args, options) => {
     const out = fs.createWriteStream('/tmp/a.tar');
+    const config = await expand(
+      options.config
+        ? "${include('" + path.basename(options.config) + "')}"
+        : {}
+    );
 
-    expand(options.config ? "${include('" + path.basename(options.config) + "')}" : {}).then(config => {
+    const manifest = {
+      acKind: 'ImageManifest',
+      acVersion: '0.8.9'
+    };
 
-      const manifest = {
-        acKind: 'ImageManifest',
-        acVersion: '0.8.9'
-      };
+    const pack = tar.pack();
 
-      const pack = tar.pack();
+    pump(pack, out);
 
-      pump(pack, out);
-
-      pack.entry({
+    pack.entry(
+      {
         name: 'manifest'
-      }, JSON.stringify(manifest));
+      },
+      JSON.stringify(manifest)
+    );
 
-      add(pack, '.');
-    });
+    add(pack, '.');
   })
   .option('-c, --config <file>', 'use config from file');
 
@@ -44,7 +46,7 @@ function statAll(cwd = '.', entries = ['.']) {
   const queue = entries;
 
   return callback => {
-    if (!queue.length) {
+    if (queue.length === 0) {
       return callback();
     }
     let next = queue.shift();
@@ -64,9 +66,7 @@ function statAll(cwd = '.', entries = ['.']) {
           return callback(err);
         }
 
-        for (let i = 0; i < files.length; i++) {
-          queue.push(path.join(next, files[i]));
-        }
+        files.forEach(file => queue.push(path.join(next, file)));
 
         callback(null, next, stat);
       });
