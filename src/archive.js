@@ -1,52 +1,31 @@
-import { expand } from 'config-expander';
-
-const program = require('caporal'),
-  path = require('path'),
+const path = require('path'),
   fs = require('fs'),
   child_process = require('child_process'),
   tar = require('tar-stream'),
   pump = require('pump'),
-  { callbackify } = require('util');
+  { promisify } = require('util');
 
-program
-  .version(require(path.join(__dirname, '..', 'package.json')).version)
-  .description('build ocf image')
-  .action(async (args, options) => {
-    const out = fs.createWriteStream('/tmp/a.tar');
-    const config = await expand(
-      options.config
-        ? "${include('" + path.basename(options.config) + "')}"
-        : {}
-    );
+const readdir = promisify(fs.readdir);
+const stat = promisify(fs.stat);
 
-    const manifest = {
-      acKind: 'ImageManifest',
-      acVersion: '0.8.9'
-    };
+export async function archive(out, dir, manifest) {
+  const pack = tar.pack();
 
-    const pack = tar.pack();
+  pump(pack, out, err => {
+    console.log(`pump done ${err}`);
+  });
 
-    pump(pack, out, err => {
-      console.log(`pump done ${err}`);
-    });
+  pack
+    .entry(
+      {
+        name: 'manifest'
+      },
+      JSON.stringify(manifest)
+    )
+    .end();
 
-    pack
-      .entry(
-        {
-          name: 'manifest'
-        },
-        JSON.stringify(manifest)
-      )
-      .end();
-
-    walk(pack, '.');
-  })
-  .option('-c, --config <file>', 'use config from file');
-
-program.parse(process.argv);
-
-const readdir = callbackify(fs.readdir);
-const fstat = callbackify(fs.fstat);
+  walk(pack, dir);
+}
 
 async function walk(pack, dir) {
   console.log(`walk: ${dir}`);
@@ -55,7 +34,7 @@ async function walk(pack, dir) {
   console.log(`*** 1 ***`);
 
   const stats = await Promise.all(
-    entries.map(entry => fstat(path.join(dir, entry)))
+    entries.map(entry => stat(path.join(dir, entry)))
   );
   console.log(`*** 2 ***`);
 
