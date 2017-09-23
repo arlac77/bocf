@@ -24,112 +24,50 @@ export async function archive(out, dir, manifest) {
     )
     .end();
 
-  walk(pack, dir);
+  const queue = [];
+
+  await walk(queue, dir, '');
+
+  const append = () => {
+    const q = queue.shift();
+    if (q === undefined) {
+      return;
+    }
+    const entry = pack.entry(q);
+    const rs = fs.createReadStream(path.join(dir, q.name));
+
+    rs.on('error', err => entry.destroy(err));
+
+    pump(rs, entry);
+
+    rs.on('end', () => append());
+  };
+
+  append();
 }
 
-async function walk(pack, dir) {
-  console.log(`walk: ${dir}`);
-
-  const entries = await readdir(dir);
-  console.log(`*** 1 ***`);
+async function walk(queue, base, dir) {
+  const entries = await readdir(path.join(base, dir));
 
   const stats = await Promise.all(
-    entries.map(entry => stat(path.join(dir, entry)))
+    entries.map(entry => stat(path.join(base, dir, entry)))
   );
-  console.log(`*** 2 ***`);
 
   for (const i in stats) {
     const stat = stats[i];
     if (stat.isDirectory()) {
-      await walk(pack, path.join(dir, entries[i].name));
+      await walk(queue, base, path.join(dir, entries[i]));
+    } else {
+      const header = {
+        name: path.join(dir, entries[i]),
+        mtime: stat.mtime,
+        size: stat.size,
+        type: 'file',
+        uid: stat.uid,
+        gid: stat.gid
+      };
+
+      queue.push(header);
     }
   }
-
-  console.log(`*** 3 ***`);
-}
-
-function statAll(cwd = '.', entries = ['.']) {
-  const queue = entries;
-
-  return callback => {
-    if (queue.length === 0) {
-      return callback();
-    }
-    let next = queue.shift();
-    let nextAbs = path.join(cwd, next);
-
-    fs.stat(nextAbs, (err, stat) => {
-      if (err) {
-        return callback(err);
-      }
-
-      if (!stat.isDirectory()) {
-        return callback(null, next, stat);
-      }
-
-      fs.readdir(nextAbs, (err, files) => {
-        if (err) {
-          return callback(err);
-        }
-
-        files.forEach(file => queue.push(path.join(next, file)));
-
-        callback(null, next, stat);
-      });
-    });
-  };
-}
-
-function add(pack, cwd = '.') {
-  const statNext = statAll();
-
-  const onStat = (err, filename, stat) => {
-    if (err) {
-      return pack.destroy(err);
-    }
-    if (!filename) {
-      return pack.finalize();
-    }
-
-    console.log(`onStat: ${filename}`);
-    const header = {
-      name: filename,
-      mtime: stat.mtime,
-      size: stat.size,
-      type: 'file',
-      uid: stat.uid,
-      gid: stat.gid
-    };
-
-    if (stat.isDirectory()) {
-      header.size = 0;
-      header.type = 'directory';
-      return pack.entry(header, onNextEntry);
-    }
-
-    const entry = pack.entry(header, onNextEntry);
-    if (!entry) {
-      return;
-    }
-
-    /*
-         const rs = fs.createReadStream(path.join(cwd, filename));
-
-         rs.on('error', err => entry.destroy(err));
-         rs.on('end', () => console.log(`end ${filename}`));
-
-         pump(rs, entry);
-         */
-  };
-
-  const onNextEntry = err => {
-    //console.log(`onnextentry: ${err}`);
-
-    if (err) {
-      return pack.destroy(err);
-    }
-    statNext(onStat);
-  };
-
-  onNextEntry();
 }
