@@ -1,7 +1,7 @@
 import babel from 'rollup-plugin-babel';
 
 export default {
-  entry: 'tests/archive-test.js',
+  input: 'tests/archive-test.js',
   external: ['ava'],
   plugins: [
     babel({
@@ -10,7 +10,9 @@ export default {
       exclude: 'node_modules/**'
     })
   ],
-  format: 'cjs',
-  dest: 'build/test-bundle.js',
-  sourceMap: true
+  output: {
+    file: 'build/test-bundle.js',
+    format: 'cjs',
+    sourcemap: true
+  }
 };
