@@ -4,7 +4,10 @@
   "description": "build ocf images",
   "module": "src/bocf-cli.js",
   "main": "dist/bocf-cli.js",
-  "keywords": ["container", "ocf"],
+  "keywords": [
+    "container",
+    "ocf"
+  ],
   "bin": {
     "bocf": "bin/bocf"
   },
@@ -14,10 +17,8 @@
     "pretest": "rollup -c tests/rollup.config.js",
     "test": "ava",
     "posttest": "npm run prepare && markdown-doctest",
-    "docs":
-      "jsdoc2md --configure doc/jsdoc.json -l off -t doc/README.hbs -f src/*.js >README.md",
-    "semantic-release":
-      "semantic-release pre && npm publish && semantic-release post",
+    "docs": "jsdoc2md --configure doc/jsdoc.json -l off -t doc/README.hbs -f src/*.js >README.md",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "prepare": "rollup -c"
   },
   "repository": {
@@ -43,7 +44,6 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "semantic-release": "^8.0.3",
     "ava": "^0.22.0",
-    "rollup-plugin-babel": "^3.0.2",
     "jsdoc-babel": "^0.3.0",
     "xo": "^0.19.0"
   },
@@ -58,13 +58,21 @@
     "node": ">=8.5.0"
   },
   "nyc": {
-    "include": ["dist/**/*.js"],
-    "reporter": ["lcov"],
+    "include": [
+      "dist/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
     "report-dir": "./coverage"
   },
   "ava": {
-    "files": ["build/test-bundle.js"],
-    "require": ["babel-register"]
+    "files": [
+      "build/test-bundle.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   },
   "template": {
     "repository": {
