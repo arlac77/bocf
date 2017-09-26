@@ -12,7 +12,7 @@ export async function archive(out, dir, manifest) {
   const pack = tar.pack();
 
   pump(pack, out, err => {
-    console.log(`pump done ${err}`);
+    console.log(`pump done ${err} ${pack} ${out}`);
   });
 
   pack
@@ -20,7 +20,7 @@ export async function archive(out, dir, manifest) {
       {
         name: 'manifest'
       },
-      JSON.stringify(manifest)
+      JSON.stringify(manifest, undefined, 2)
     )
     .end();
 
@@ -37,6 +37,10 @@ export async function archive(out, dir, manifest) {
     const rs = fs.createReadStream(path.join(dir, q.name));
 
     rs.on('error', err => entry.destroy(err));
+
+    if (!entry) {
+      console.log(`no entry: ${JSON.stringify(q)}`);
+    }
 
     pump(rs, entry);
 

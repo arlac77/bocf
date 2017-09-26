@@ -3,18 +3,56 @@ import test from 'ava';
 import { archive } from '../src/archive';
 
 const fs = require('fs');
+const path = require('path');
 const { promisify } = require('util');
 
 test('archive', async t => {
-  const outFileName = '/tmp/a.tar';
+  const outFileName = path.join(__dirname, '..', 'build', 'a.aci');
   const out = fs.createWriteStream(outFileName);
 
   await archive(out, __dirname, {
     acKind: 'ImageManifest',
-    acVersion: '0.8.9'
+    acVersion: '0.8.11',
+    labels: [
+      {
+        name: 'version',
+        value: '1.0.0'
+      },
+      {
+        name: 'arch',
+        value: 'amd64'
+      },
+      {
+        name: 'os',
+        value: 'linux'
+      }
+    ],
+    app: {
+      exec: ['/usr/bin/reduce-worker', '--quiet'],
+      user: '100',
+      group: '300'
+    },
+    supplementaryGids: [400, 500],
+    eventHandlers: [
+      {
+        exec: ['/usr/bin/data-downloader'],
+        name: 'pre-start'
+      },
+      {
+        exec: ['/usr/bin/deregister-worker', '--verbose'],
+        name: 'post-stop'
+      }
+    ],
+    workingDirectory: '/opt/work',
+    environment: [
+      {
+        name: 'REDUCE_WORKER_DEBUG',
+        value: 'true'
+      }
+    ]
   });
 
   const stat = await promisify(fs.stat)(outFileName);
 
-  t.is(stat.size, 1024);
+  t.is(stat.size, 1536);
 });
