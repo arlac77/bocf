@@ -1,5 +1,5 @@
 import { expand } from 'config-expander';
-import { archive } from './archive';
+import { archive, createManifest } from './archive';
 
 const program = require('caporal');
 const fs = require('fs');
@@ -15,12 +15,7 @@ program
         : {}
     );
 
-    const manifest = {
-      acKind: 'ImageManifest',
-      acVersion: '0.8.9'
-    };
-
-    archive(out, '.', manifest);
+    archive(out, '.', createManifest({ name: 'example.com/reduce-worker' }));
   })
   .option('-c, --config <file>', 'use config from file');
 

@@ -1,12 +1,23 @@
 const path = require('path'),
   fs = require('fs'),
-  child_process = require('child_process'),
   tar = require('tar-stream'),
   pump = require('pump'),
   { promisify } = require('util');
 
 const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
+
+const ROOTFS = 'rootfs';
+
+export function createManifest(options = {}) {
+  return Object.assign(
+    {
+      acKind: 'ImageManifest',
+      acVersion: '0.8.11'
+    },
+    options
+  );
+}
 
 export async function archive(out, dir, manifest) {
   const pack = tar.pack();
@@ -63,7 +74,7 @@ async function walk(queue, base, dir) {
       await walk(queue, base, path.join(dir, entries[i]));
     } else {
       const header = {
-        name: path.join(dir, entries[i]),
+        name: path.join(ROOTFS, dir, entries[i]),
         mtime: stat.mtime,
         size: stat.size,
         type: 'file',
