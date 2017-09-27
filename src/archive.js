@@ -8,6 +8,7 @@ const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
 
 const ROOTFS = 'rootfs';
+const MANIFEST = 'manifest';
 
 export function createManifest(options = {}) {
   return Object.assign(
@@ -22,16 +23,22 @@ export function createManifest(options = {}) {
 export async function archive(out, dir, manifest) {
   const pack = tar.pack();
 
+  const uname = 'root';
+  const gname = 'sys';
+
   pump(pack, out, err => {
-    console.log(`pump done ${err} ${pack} ${out}`);
+    console.log(`pump done ${err}`);
   });
 
   pack
     .entry(
       {
-        name: 'manifest'
+        name: MANIFEST,
+        type: 'file',
+        uname,
+        gname
       },
-      JSON.stringify(manifest, undefined, 2)
+      JSON.stringify(manifest)
     )
     .end();
 
@@ -72,7 +79,7 @@ async function walk(queue, base, dir) {
     const stat = stats[i];
     if (stat.isDirectory()) {
       await walk(queue, base, path.join(dir, entries[i]));
-    } else {
+    } else if (stat.isFile()) {
       const header = {
         name: path.join(ROOTFS, dir, entries[i]),
         mtime: stat.mtime,

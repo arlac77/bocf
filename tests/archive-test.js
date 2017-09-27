@@ -7,7 +7,7 @@ const path = require('path');
 const { promisify } = require('util');
 
 test('archive', async t => {
-  const outFileName = path.join(__dirname, '..', 'build', 'a.aci');
+  const outFileName = path.join(__dirname, '..', 'build', 'test.aci');
   const out = fs.createWriteStream(outFileName);
 
   await archive(
