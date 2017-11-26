@@ -31,7 +31,7 @@
   "homepage": "https://github.com/arlac77/bocf#readme",
   "dependencies": {
     "caporal": "^0.8.0",
-    "config-expander": "^9.0.0",
+    "config-expander": "^9.0.1",
     "pump": "^1.0.3",
     "tar-stream": "^1.5.5"
   },
