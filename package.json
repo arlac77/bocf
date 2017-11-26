@@ -4,7 +4,10 @@
   "description": "build OCI Image Format images",
   "module": "src/bocf-cli.js",
   "main": "dist/bocf-cli.js",
-  "keywords": ["container", "OCI"],
+  "keywords": [
+    "container",
+    "OCI"
+  ],
   "bin": {
     "bocf": "bin/bocf"
   },
@@ -14,8 +17,7 @@
     "pretest": "rollup -c tests/rollup.config.js",
     "test": "ava",
     "posttest": "npm run prepare && markdown-doctest",
-    "docs":
-      "jsdoc2md --configure doc/jsdoc.json -l off -t doc/README.hbs -f src/*.js >README.md",
+    "docs": "jsdoc2md --configure doc/jsdoc.json -l off -t doc/README.hbs -f src/*.js >README.md",
     "semantic-release": "semantic-release",
     "prepare": "rollup -c"
   },
@@ -58,13 +60,22 @@
     "node": ">=8.9.1"
   },
   "nyc": {
-    "include": ["build/*-test.js", "src/**/*.js"],
-    "reporter": ["lcov"],
+    "include": [
+      "build/*-test.js",
+      "src/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
     "report-dir": "./build/coverage"
   },
   "ava": {
-    "files": ["build/*-test.js"],
-    "require": ["babel-register"]
+    "files": [
+      "build/*-test.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   },
   "template": {
     "repository": {
