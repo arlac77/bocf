@@ -20,52 +20,73 @@ export function createManifest(options = {}) {
   );
 }
 
+async function writeManifest(pack, manifest) {
+  const uname = 'root';
+  const gname = 'sys';
+
+  return new Promise((resolve, reject) => {
+    pack
+      .entry(
+        {
+          name: MANIFEST,
+          type: 'file',
+          uname,
+          gname
+        },
+        JSON.stringify(manifest)
+      )
+      .end(err => {
+        if (err) reject(err);
+        else resolve();
+      });
+  });
+}
+
 export async function archive(out, dir, manifest) {
   const pack = tar.pack();
 
   const uname = 'root';
   const gname = 'sys';
 
-  pump(pack, out, err => {
-    console.log(`pump done ${err}`);
-  });
-
-  pack
-    .entry(
-      {
-        name: MANIFEST,
-        type: 'file',
-        uname,
-        gname
-      },
-      JSON.stringify(manifest)
-    )
-    .end();
+  await writeManifest(pack, manifest);
 
   const queue = [];
 
   await walk(queue, dir, '');
 
-  const append = () => {
-    const q = queue.shift();
-    if (q === undefined) {
-      return;
-    }
-    const entry = pack.entry(q);
-    const rs = fs.createReadStream(path.join(dir, q.name));
+  return new Promise((resolve, reject) => {
+    pump(pack, out, err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
 
-    rs.on('error', err => entry.destroy(err));
+    const append = () => {
+      const entry = queue.shift();
+      if (entry === undefined) {
+        pack.finalize();
+        return;
+      }
 
-    if (!entry) {
-      console.log(`no entry: ${JSON.stringify(q)}`);
-    }
+      const name = entry.name;
+      entry.name = path.join(ROOTFS, name);
+      pump(
+        fs.createReadStream(path.join(dir, name)),
+        pack.entry(entry),
+        err => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          append();
+        }
+      );
+    };
 
-    pump(rs, entry);
-
-    rs.on('end', () => append());
-  };
-
-  append();
+    append();
+  });
 }
 
 async function walk(queue, base, dir) {
@@ -81,7 +102,7 @@ async function walk(queue, base, dir) {
       await walk(queue, base, path.join(dir, entries[i]));
     } else if (stat.isFile()) {
       const header = {
-        name: path.join(ROOTFS, dir, entries[i]),
+        name: path.join(dir, entries[i]),
         mtime: stat.mtime,
         size: stat.size,
         type: 'file',

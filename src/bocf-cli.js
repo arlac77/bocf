@@ -1,8 +1,9 @@
 import { expand } from 'config-expander';
 import { archive, createManifest } from './archive';
 
-const program = require('caporal');
+const path = require('path');
 const fs = require('fs');
+const program = require('caporal');
 
 program
   .version(require(path.join(__dirname, '..', 'package.json')).version)

@@ -12,7 +12,7 @@ test('archive', async t => {
 
   await archive(
     out,
-    __dirname,
+    path.join(__dirname, '..', 'tests'),
     createManifest({
       labels: [
         {
@@ -56,5 +56,5 @@ test('archive', async t => {
 
   const stat = await promisify(fs.stat)(outFileName);
 
-  t.is(stat.size, 1536);
+  t.is(stat.size, 5120);
 });
