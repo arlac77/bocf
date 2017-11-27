@@ -36,18 +36,19 @@
     "tar-stream": "^1.5.5"
   },
   "devDependencies": {
+    "ava": "^0.23.0",
+    "babel-preset-env": "^1.6.1",
+    "jsdoc-babel": "^0.3.0",
     "jsdoc-to-markdown": "^3.0.2",
     "markdown-doctest": "^0.9.1",
     "nyc": "^11.3.0",
     "rollup": "^0.52.0",
     "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-multi-entry": "^2.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "semantic-release": "^10.0.1",
-    "ava": "^0.23.0",
-    "jsdoc-babel": "^0.3.0",
-    "xo": "^0.19.0",
-    "babel-preset-env": "^1.6.1"
+    "xo": "^0.19.0"
   },
   "contributors": [
     {
