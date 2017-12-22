@@ -19,13 +19,9 @@ bocf
 =====
 build ocf images
 
-
 [App Container Image](https://github.com/appc/spec/blob/master/spec/aci.md)
 
-API Reference
-=====
-
-* * *
+# API
 
 install
 =======
