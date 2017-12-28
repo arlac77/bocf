@@ -1,13 +1,20 @@
 {
   "name": "bocf",
   "version": "0.0.0-semantic-release",
-  "description": "build OCI Image Format images",
-  "module": "src/bocf-cli.js",
   "main": "dist/bocf-cli.js",
+  "module": "src/bocf-cli.js",
+  "description": "build OCI Image Format images",
   "keywords": [
     "container",
     "OCI"
   ],
+  "contributors": [
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
+  "license": "BSD-2-Clause",
   "bin": {
     "bocf": "bin/bocf"
   },
@@ -22,14 +29,6 @@
     "prepare": "rollup -c",
     "lint": "documentation lint src/bocf-cli.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arlac77/bocf.git"
-  },
-  "bugs": {
-    "url": "https://github.com/arlac77/bocf/issues"
-  },
-  "homepage": "https://github.com/arlac77/bocf#readme",
   "dependencies": {
     "caporal": "^0.9.0",
     "config-expander": "^9.0.1",
@@ -49,15 +48,24 @@
     "xo": "^0.19.0",
     "documentation": "^5.3.5"
   },
-  "contributors": [
-    {
-      "name": "Markus Felten",
-      "email": "markus.felten@gmx.de"
-    }
-  ],
-  "license": "BSD-2-Clause",
   "engines": {
     "node": ">=8.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arlac77/bocf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arlac77/bocf/issues"
+  },
+  "homepage": "https://github.com/arlac77/bocf#readme",
+  "ava": {
+    "files": [
+      "build/*-test.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   },
   "nyc": {
     "include": [
@@ -69,20 +77,12 @@
     ],
     "report-dir": "./build/coverage"
   },
-  "ava": {
-    "files": [
-      "build/*-test.js"
-    ],
-    "require": [
-      "babel-register"
-    ]
+  "xo": {
+    "space": true
   },
   "template": {
     "repository": {
       "url": "https://github.com/arlac77/npm-package-template.git"
     }
-  },
-  "xo": {
-    "space": true
   }
 }
