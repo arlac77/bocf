@@ -1,6 +1,9 @@
 {
   "name": "bocf",
   "version": "0.0.0-semantic-release",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/bocf-cli.js",
   "module": "src/bocf-cli.js",
   "description": "build OCI Image Format images",
