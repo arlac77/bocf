@@ -1,11 +1,9 @@
-const path = require('path'),
-  fs = require('fs'),
-  tar = require('tar-stream'),
-  pump = require('pump'),
-  { promisify } = require('util');
+import { join } from 'path';
+import { createReadStream } from 'fs';
+import pump from 'pump';
+import { pack as tarPack } from 'tar-stream';
 
-const readdir = promisify(fs.readdir);
-const stat = promisify(fs.stat);
+const { readdir, stat } = require('fs').promises;
 
 const ROOTFS = 'rootfs';
 const MANIFEST = 'manifest';
@@ -43,8 +41,7 @@ async function writeManifest(pack, manifest) {
 }
 
 export async function archive(out, dir, manifest) {
-  const pack = tar.pack();
-
+  const pack = tarPack();
   const uname = 'root';
   const gname = 'sys';
 
@@ -71,18 +68,14 @@ export async function archive(out, dir, manifest) {
       }
 
       const name = entry.name;
-      entry.name = path.join(ROOTFS, name);
-      pump(
-        fs.createReadStream(path.join(dir, name)),
-        pack.entry(entry),
-        err => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          append();
+      entry.name = join(ROOTFS, name);
+      pump(createReadStream(join(dir, name)), pack.entry(entry), err => {
+        if (err) {
+          reject(err);
+          return;
         }
-      );
+        append();
+      });
     };
 
     append();
@@ -90,19 +83,19 @@ export async function archive(out, dir, manifest) {
 }
 
 async function walk(queue, base, dir) {
-  const entries = await readdir(path.join(base, dir));
+  const entries = await readdir(join(base, dir));
 
   const stats = await Promise.all(
-    entries.map(entry => stat(path.join(base, dir, entry)))
+    entries.map(entry => stat(join(base, dir, entry)))
   );
 
   for (const i in stats) {
     const stat = stats[i];
     if (stat.isDirectory()) {
-      await walk(queue, base, path.join(dir, entries[i]));
+      await walk(queue, base, join(dir, entries[i]));
     } else if (stat.isFile()) {
       const header = {
-        name: path.join(dir, entries[i]),
+        name: join(dir, entries[i]),
         mtime: stat.mtime,
         size: stat.size,
         type: 'file',

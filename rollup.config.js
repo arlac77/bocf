@@ -7,9 +7,21 @@ export default {
   output: {
     file: pkg.bin.bocf,
     format: 'cjs',
-    banner: '#!/usr/bin/env node'
+    banner: '#!/usr/bin/env node',
+    interop: false
   },
   plugins: [nodeResolve(), commonjs(), json()],
-  external: ['config-expander'],
+  external: [
+    'config-expander',
+    'fs',
+    'path',
+    'util',
+    'stream',
+    'buffer',
+    'events',
+    'constants',
+    'tar-stream',
+    'pump'
+  ],
   input: pkg.module
 };
