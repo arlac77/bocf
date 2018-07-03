@@ -29,15 +29,17 @@
     "posttest": "npm run prepare && markdown-doctest",
     "docs": "documentation readme src/bocf-cli.js --section=API",
     "semantic-release": "semantic-release",
-    "prepare": "rollup -c",
+    "prepare": "npm run snyk-protect; rollup -c",
     "lint": "documentation lint src/bocf-cli.js",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "snyk-protect": "snyk protect"
   },
   "dependencies": {
     "caporal": "^0.10.0",
     "config-expander": "^9.0.1",
     "pump": "^3.0.0",
-    "tar-stream": "^1.5.5"
+    "tar-stream": "^1.5.5",
+    "snyk": "^1.88.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
@@ -88,5 +90,6 @@
     "repository": {
       "url": "https://github.com/arlac77/npm-package-template.git"
     }
-  }
+  },
+  "snyk": true
 }
