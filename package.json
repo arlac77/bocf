@@ -65,7 +65,8 @@
   "homepage": "https://github.com/arlac77/bocf#readme",
   "ava": {
     "files": [
-      "tests/*-test.js"
+      "tests/*-test.js",
+      "tests/*-test.mjs"
     ],
     "require": [
       "esm"
