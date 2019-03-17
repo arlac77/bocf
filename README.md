@@ -7,7 +7,6 @@
 [![Coverage Status](https://coveralls.io/repos/arlac77/bocf/badge.svg)](https://coveralls.io/r/arlac77/bocf)
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/bocf/badge.svg)](https://snyk.io/test/github/arlac77/bocf)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/bocf.svg?style=flat-square)](https://github.com/arlac77/bocf/issues)
-[![Stories in Ready](https://badge.waffle.io/arlac77/bocf.svg?label=ready&title=Ready)](http://waffle.io/arlac77/bocf)
 [![Dependency Status](https://david-dm.org/arlac77/bocf.svg)](https://david-dm.org/arlac77/bocf)
 [![devDependency Status](https://david-dm.org/arlac77/bocf/dev-status.svg)](https://david-dm.org/arlac77/bocf#info=devDependencies)
 [![docs](http://inch-ci.org/github/arlac77/bocf.svg?branch=master)](http://inch-ci.org/github/arlac77/bocf)
