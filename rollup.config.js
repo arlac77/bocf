@@ -1,3 +1,4 @@
+import builtins from "builtin-modules";
 import cleanup from "rollup-plugin-cleanup";
 import executable from "rollup-plugin-executable";
 import resolve from "rollup-plugin-node-resolve";
