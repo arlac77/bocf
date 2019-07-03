@@ -27,13 +27,16 @@
     "lint": "documentation lint src/bocf-cli.js",
     "posttest": "npm run prepare && markdown-doctest",
     "prepare": "rollup -c",
-    "test": "ava"
+    "test": "ava",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "caporal": "^0.10.0",
     "config-expander": "^10.2.5",
     "pump": "^3.0.0",
-    "tar-stream": "^1.5.5"
+    "tar-stream": "^1.5.5",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "ava": "^2.1.0",
@@ -78,5 +81,6 @@
     "repository": {
       "url": "https://github.com/arlac77/npm-package-template.git"
     }
-  }
+  },
+  "snyk": true
 }
