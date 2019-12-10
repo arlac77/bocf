@@ -1,3 +1,4 @@
+import acornClassFields from 'acorn-class-fields';
 import builtins from "builtin-modules";
 import cleanup from "rollup-plugin-cleanup";
 import executable from "rollup-plugin-executable";
