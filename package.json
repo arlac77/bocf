@@ -36,7 +36,7 @@
     "tar-stream": "^1.5.5"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^6.1.0",
     "acorn-class-fields": "https://github.com/arlac77/acorn-class-fields.git",
     "ava": "^2.4.0",
     "builtin-modules": "^3.1.0",
@@ -44,7 +44,7 @@
     "documentation": "^12.1.4",
     "esm": "^3.2.25",
     "markdown-doctest": "^1.0.0",
-    "rollup": "^1.27.14",
+    "rollup": "^1.28.0",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-executable": "^1.5.2",
     "semantic-release": "^15.14.0"
