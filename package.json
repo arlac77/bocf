@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/bocf-cli.js",
+  "main": "dist/bocf-cli.mjs",
   "description": "build OCI Image Format images",
   "keywords": [
     "container",
