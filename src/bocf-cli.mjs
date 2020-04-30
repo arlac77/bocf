@@ -1,13 +1,11 @@
 import { expand } from 'config-expander';
-import { archive, createManifest } from './archive';
-import { version } from '../package.json';
+import { archive, createManifest } from './archive.mjs';
 import { basename } from 'path';
 import { createWriteStream } from 'fs';
+import program from "commander";
 
-const program = require('caporal');
 
 program
-  .version(version)
   .description('build ocf image')
   .action(async (args, options) => {
     const out = createWriteStream('/tmp/a.tar');
@@ -18,5 +16,4 @@ program
     archive(out, '.', createManifest({ name: 'example.com/reduce-worker' }));
   })
   .option('-c, --config <file>', 'use config from file');
-
-program.parse(process.argv);
+ .parse(process.argv);

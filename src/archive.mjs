@@ -1,9 +1,9 @@
 import { join } from 'path';
-import { createReadStream } from 'fs';
+import fs, { createReadStream } from 'fs';
 import pump from 'pump';
 import { pack as tarPack } from 'tar-stream';
 
-const { readdir, stat } = require('fs').promises;
+const { readdir, stat } = fs.promises;
 
 const ROOTFS = 'rootfs';
 const MANIFEST = 'manifest';
