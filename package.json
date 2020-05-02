@@ -8,7 +8,8 @@
   "type": "module",
   "main": "dist/bocf-cli.mjs",
   "exports": {
-    ".": "./dist/bocf-cli.mjs"
+    ".": "./dist/bocf-cli.mjs",
+    "./": "./"
   },
   "description": "build OCI Image Format images",
   "keywords": [
