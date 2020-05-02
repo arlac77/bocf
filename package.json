@@ -8,7 +8,7 @@
   "type": "module",
   "main": "dist/bocf-cli.mjs",
   "exports": {
-    ".": "./dist/bocf-cli.mjs",
+    ".": "dist/bocf-cli.mjs",
     "./": "./"
   },
   "description": "build OCI Image Format images",
@@ -29,8 +29,8 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "documentation readme src/bocf-cli.mjs --section=API && documentation readme dist/bocf-cli.mjs --section=API",
-    "lint": "documentation lint src/bocf-cli.mjs && documentation lint dist/bocf-cli.mjs"
+    "docs": "documentation readme dist/bocf-cli.mjs --section=API",
+    "lint": "documentation lint dist/bocf-cli.mjs"
   },
   "dependencies": {
     "commander": "^4.0.1",
