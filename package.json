@@ -33,10 +33,10 @@
     "lint": "documentation lint dist/bocf-cli.mjs"
   },
   "dependencies": {
-    "commander": "^4.0.1",
+    "commander": "^5.1.0",
     "config-expander": "^11.0.13",
     "pump": "^3.0.0",
-    "tar-stream": "^1.5.5"
+    "tar-stream": "^2.1.2"
   },
   "devDependencies": {
     "ava": "^3.8.1",
