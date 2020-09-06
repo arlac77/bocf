@@ -13,9 +13,14 @@
   "description": "build OCI Image Format images",
   "keywords": [
     "OCI",
-    "container"
+    "container",
+    "test"
   ],
   "contributors": [
+    {
+      "name": "Torsten Link",
+      "email": "torstenlink@gmx.de"
+    },
     {
       "name": "Markus Felten",
       "email": "markus.felten@gmx.de"
@@ -28,8 +33,8 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "documentation readme dist/bocf-cli.mjs --section=API",
-    "lint": "documentation lint dist/bocf-cli.mjs"
+    "docs": "documentation readme ./src/module.mjs --section=API && documentation readme dist/bocf-cli.mjs --section=API",
+    "lint": "documentation lint ./src/module.mjs && documentation lint dist/bocf-cli.mjs"
   },
   "dependencies": {
     "commander": "^6.0.0",
@@ -41,10 +46,11 @@
     "ava": "^3.12.1",
     "c8": "^7.3.0",
     "documentation": "^13.0.2",
+    "kronos-endpoint": "^2.14.15",
     "semantic-release": "^17.1.1"
   },
   "engines": {
-    "node": ">=12.16.3"
+    "node": ">=14.5.0"
   },
   "repository": {
     "type": "git",
