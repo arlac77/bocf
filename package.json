@@ -13,9 +13,19 @@
   "description": "build OCI Image Format images",
   "keywords": [
     "OCI",
-    "container"
+    "aggregate",
+    "asynciterator",
+    "bitbucket",
+    "container",
+    "git",
+    "repository-provider",
+    "test"
   ],
   "contributors": [
+    {
+      "name": "Torsten Link",
+      "email": "torstenlink@gmx.de"
+    },
     {
       "name": "Markus Felten",
       "email": "markus.felten@gmx.de"
@@ -28,23 +38,35 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "documentation readme dist/bocf-cli.mjs --section=API",
-    "lint": "documentation lint dist/bocf-cli.mjs"
+    "docs": "documentation readme ./src/aggregate-async-iterator.mjs --section=API && documentation readme dist/bocf-cli.mjs --section=API && documentation readme ./src/repository-provider.mjs --section=API && documentation readme ./src/bitbucket-provider.mjs --section=API && documentation readme ./src/module.mjs --section=API",
+    "lint": "documentation lint ./src/aggregate-async-iterator.mjs && documentation lint dist/bocf-cli.mjs && documentation lint ./src/repository-provider.mjs && documentation lint ./src/bitbucket-provider.mjs && documentation lint ./src/module.mjs"
   },
   "dependencies": {
+    "aggregate-async-iterator": "^1.1.1",
     "commander": "^6.0.0",
     "config-expander": "^11.0.13",
+    "content-entry": "^2.5.0",
+    "matching-iterator": "^1.1.2",
+    "node-fetch": "3.0.0-beta.9",
+    "one-time-execution-method": "^2.0.1",
     "pump": "^3.0.0",
+    "repository-provider": "^23.6.5",
     "tar-stream": "^2.1.2"
   },
   "devDependencies": {
     "ava": "^3.12.1",
+    "bitbucket-repository-provider": "^3.7.17",
     "c8": "^7.3.0",
     "documentation": "^13.0.2",
+    "gitea-repository-provider": "^1.13.4",
+    "github-repository-provider": "^7.17.0",
+    "kronos-endpoint": "^2.14.15",
+    "local-repository-provider": "^6.7.13",
+    "repository-provider-test-support": "^1.0.1",
     "semantic-release": "^17.1.1"
   },
   "engines": {
-    "node": ">=12.16.3"
+    "node": ">=14.5.0"
   },
   "repository": {
     "type": "git",
