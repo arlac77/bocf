@@ -6,7 +6,7 @@
   },
   "sideEffects": false,
   "exports": {
-    ".": "dist/bocf-cli.mjs"
+    ".": "./src/archive.mjs"
   },
   "description": "build OCI Image Format images",
   "keywords": [
@@ -44,7 +44,7 @@
     "semantic-release": "^19.0.3"
   },
   "engines": {
-    "node": ">=14.19.1"
+    "node": ">=16.16.0"
   },
   "repository": {
     "type": "git",
