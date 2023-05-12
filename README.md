@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/bocf.svg)](https://www.npmjs.com/package/bocf)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Open Bundle](https://bundlejs.com/badge-light.svg)](https://bundlejs.com/?q=bocf)
+[![bundlejs](https://deno.bundlejs.com/?q=bocf\&badge=detailed)](https://bundlejs.com/?q=bocf)
 [![downloads](http://img.shields.io/npm/dm/bocf.svg?style=flat-square)](https://npmjs.org/package/bocf)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/bocf.svg?style=flat-square)](https://github.com/arlac77/bocf/issues)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fbocf%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/arlac77/bocf/goto)
