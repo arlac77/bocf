@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "commander": "^10.0.1",
-    "config-expander": "^13.0.6",
+    "config-expander": "^13.0.7",
     "pump": "^3.0.0",
     "tar-stream": "^3.0.0"
   },
