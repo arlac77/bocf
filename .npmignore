@@ -6,3 +6,9 @@ doc
 rollup.config.*
 .vscode
 .github
+.node-version
+jsconfig.json
+pkg
+vite.config.mts
+dist
+netlify.toml
