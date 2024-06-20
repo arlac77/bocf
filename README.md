@@ -1,5 +1,7 @@
+[![Svelte v5](https://img.shields.io/badge/svelte-v5-orange.svg)](https://svelte.dev)
 [![npm](https://img.shields.io/npm/v/bocf.svg)](https://www.npmjs.com/package/bocf)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Typed with TypeScript](https://flat.badgen.net/badge/icon/Typed?icon=typescript\&label\&labelColor=blue\&color=555555)](https://typescriptlang.org)
 [![bundlejs](https://deno.bundlejs.com/?q=bocf\&badge=detailed)](https://bundlejs.com/?q=bocf)
 [![downloads](http://img.shields.io/npm/dm/bocf.svg?style=flat-square)](https://npmjs.org/package/bocf)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/bocf.svg?style=flat-square)](https://github.com/arlac77/bocf/issues)
@@ -8,6 +10,7 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/bocf/badge.svg)](https://snyk.io/test/github/arlac77/bocf)
 [![Coverage Status](https://coveralls.io/repos/arlac77/bocf/badge.svg)](https://coveralls.io/github/arlac77/bocf)
+[![Tested with TestCafe](https://img.shields.io/badge/tested%20with-TestCafe-2fa4cf.svg)](https://github.com/DevExpress/testcafe)
 
 # bocf
 
