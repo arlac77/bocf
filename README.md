@@ -1,5 +1,5 @@
 [![npm](https://img.shields.io/npm/v/bocf.svg)](https://www.npmjs.com/package/bocf)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://spdx.org/licenses/0BSD.html)
 [![bundlejs](https://deno.bundlejs.com/?q=bocf\&badge=detailed)](https://bundlejs.com/?q=bocf)
 [![downloads](http://img.shields.io/npm/dm/bocf.svg?style=flat-square)](https://npmjs.org/package/bocf)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/bocf.svg?style=flat-square)](https://github.com/arlac77/bocf/issues)
