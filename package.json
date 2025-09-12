@@ -33,7 +33,7 @@
     "lint:docs": "documentation lint ./src**/*.mjs"
   },
   "dependencies": {
-    "commander": "^14.0.0",
+    "commander": "^14.0.1",
     "config-expander": "^14.0.9",
     "pump": "^3.0.0",
     "tar-stream": "^3.0.0"
