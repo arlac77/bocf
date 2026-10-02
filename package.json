@@ -54,7 +54,7 @@
   "bugs": {
     "url": "https://github.com/arlac77/bocf/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/arlac77/bocf#readme",
   "template": {
     "inheritFrom": [
       "arlac77/template-arlac77-github",
